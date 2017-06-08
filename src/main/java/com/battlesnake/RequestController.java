@@ -39,7 +39,7 @@ public class RequestController {
   public StartResponse start(@RequestBody StartRequest request) {
     return new StartResponse()
       .setName(SNAKE_NAME)
-      .setColor("#00ff00")
+      .setColor("FFFFFF")//#00ff00")
       .setHeadUrl("http://vignette1.wikia.nocookie.net/nintendo/images/6/61/Bowser_Icon.png/revision/latest?cb=20120820000805&path-prefix=en")
       .setHeadType(HeadType.FANG)
       .setTailType(TailType.CURLED)
