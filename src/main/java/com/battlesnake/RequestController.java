@@ -63,7 +63,7 @@ public class RequestController {
     final Move foodMove = getDirectFoodMove(request.getFood()[0]);
 
     return new MoveResponse()
-      .setMove(safeDirections.get(0))
+      .setMove(foodMove)
       .setTaunt("Going Somewhere!");
   }
 
