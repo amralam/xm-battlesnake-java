@@ -86,7 +86,7 @@ public class RequestController {
           directions.remove(Move.LEFT);
         }
         //check to the right
-        if ((coords[0] == xhead + 1 && coords[1] == yhead) || xhead == width) {
+        if ((coords[0] == xhead + 1 && coords[1] == yhead) || xhead == width - 1) {
           directions.remove(Move.RIGHT);
         }
         //check to the top
@@ -94,7 +94,7 @@ public class RequestController {
           directions.remove(Move.UP);
         }
         //check to the bottom
-        if ((coords[1] == yhead + 1 && coords[0] == xhead) || yhead == height) {
+        if ((coords[1] == yhead + 1 && coords[0] == xhead) || yhead == height - 1) {
           directions.remove(Move.DOWN);
         }
       }
