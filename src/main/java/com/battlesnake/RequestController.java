@@ -32,12 +32,14 @@ public class RequestController {
   static String SNAKE_NAME = "All Your Snake";
   Snake ourSnake;
   Snake otherSnake;
+  int height;
+  int width;
 
   @RequestMapping(value="/start", method=RequestMethod.POST, produces="application/json")
   public StartResponse start(@RequestBody StartRequest request) {
     return new StartResponse()
       .setName(SNAKE_NAME)
-      .setColor("#FFAA00")
+      .setColor("#00ff00")
       .setHeadUrl("http://vignette1.wikia.nocookie.net/nintendo/images/6/61/Bowser_Icon.png/revision/latest?cb=20120820000805&path-prefix=en")
       .setHeadType(HeadType.FANG)
       .setTailType(TailType.CURLED)
@@ -46,8 +48,8 @@ public class RequestController {
 
   @RequestMapping(value="/move", method=RequestMethod.POST, produces = "application/json")
   public MoveResponse move(@RequestBody MoveRequest request) {
-    int height = request.getHeight();
-    int width = request.getWidth();
+    height = request.getHeight();
+    width = request.getWidth();
     getSnakes(request.getSnakes());
     int food[][] = request.getFood();
 
@@ -60,15 +62,34 @@ public class RequestController {
 
     ArrayList<Snake> snakes = request.getSnakes();
     return new MoveResponse()
-      .setMove(Move.DOWN)
-      .setTaunt("Going Down!");
+      .setMove(safeDirections.get(0))
+      .setTaunt("Going Somewhere!");
   }
 
   private ArrayList<Move> getSafeDirections(int xhead, int yhead, ArrayList<Snake> snakes) {
     ArrayList<Move> directions = new ArrayList<>();
+    directions.add(Move.UP);
+    directions.add(Move.DOWN);
+    directions.add(Move.LEFT);
+    directions.add(Move.RIGHT);
     for (Snake snake: snakes) {
       for (int[] coords : snake.getCoords()) {
-
+        //Check to the left
+        if ((coords[0] == xhead -1 && coords[1] == yhead) || xhead == 0) {
+          directions.remove(Move.LEFT);
+        }
+        //check to the right
+        if ((coords[0] == xhead + 1 && coords[1] == yhead) || xhead == width) {
+          directions.remove(Move.RIGHT);
+        }
+        //check to the top
+        if ((coords[1] == yhead - 1 && coords[0] == xhead) || yhead == 0) {
+          directions.remove(Move.UP);
+        }
+        //check to the bottom
+        if ((coords[1] == yhead + 1 && coords[0] == xhead) || yhead == height) {
+          directions.remove(Move.DOWN);
+        }
       }
     }
     return directions;
