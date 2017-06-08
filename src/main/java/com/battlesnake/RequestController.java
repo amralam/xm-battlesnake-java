@@ -119,7 +119,7 @@ public class RequestController {
 
   private void getSnakes(ArrayList<Snake> snakes) {
     for (Snake snake : snakes) {
-        if (snake.getName().equals("All Your Base Snake")) {
+        if (snake.getName().equals(SNAKE_NAME)) {
           ourSnake = snake;
         } else {
           otherSnake = snake;
