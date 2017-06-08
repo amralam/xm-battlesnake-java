@@ -39,7 +39,7 @@ public class RequestController {
   public StartResponse start(@RequestBody StartRequest request) {
     return new StartResponse()
       .setName(SNAKE_NAME)
-      .setColor("FFFFFF")//#00ff00")
+      .setColor("#00ff00")
       .setHeadUrl("http://vignette1.wikia.nocookie.net/nintendo/images/6/61/Bowser_Icon.png/revision/latest?cb=20120820000805&path-prefix=en")
       .setHeadType(HeadType.FANG)
       .setTailType(TailType.CURLED)
@@ -57,7 +57,7 @@ public class RequestController {
     int x = head[0];
     int y = head[1];
 
-    ArrayList<Move> safeDirections = getSafeDirections(x, y, request.getSnakes());
+    //ArrayList<Move> safeDirections = getSafeDirections(x, y, request.getSnakes());
     ArrayList<Snake> snakes = request.getSnakes();
 
     final Move foodMove = getDirectFoodMove(request.getFood()[0]);
