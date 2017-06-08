@@ -58,9 +58,10 @@ public class RequestController {
     int y = head[1];
 
     ArrayList<Move> safeDirections = getSafeDirections(x, y, request.getSnakes());
-
-
     ArrayList<Snake> snakes = request.getSnakes();
+
+    final Move foodMove = getDirectFoodMove(request.getFood()[0]);
+
     return new MoveResponse()
       .setMove(safeDirections.get(0))
       .setTaunt("Going Somewhere!");
@@ -93,6 +94,27 @@ public class RequestController {
       }
     }
     return directions;
+  }
+
+  private Move getDirectFoodMove(int[] foodPoint) {
+    int x = ourSnake.getCoords()[0][0];
+    int y = ourSnake.getCoords()[0][1];
+    x -= foodPoint[0];
+    y -= foodPoint[1];
+
+    if (Math.abs(x) < Math.abs(y)) {
+      if (x > 0) {
+        return Move.LEFT;
+      } else {
+        return Move.RIGHT;
+      }
+    } else {
+      if (y > 0) {
+        return Move.UP;
+      } else {
+        return Move.DOWN;
+      }
+    }
   }
 
   private void getSnakes(ArrayList<Snake> snakes) {
