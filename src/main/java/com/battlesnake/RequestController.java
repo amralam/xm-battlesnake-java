@@ -66,7 +66,8 @@ public class RequestController {
 
     if (!safeDirections.contains(foodMove) && !safeDirections.isEmpty())
     {
-      foodMove = safeDirections.get(0);
+
+      foodMove = safeDirections.get((int)Math.round(Math.random() * safeDirections.size()));
     }
     return new MoveResponse()
       .setMove(foodMove)
