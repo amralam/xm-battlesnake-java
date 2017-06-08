@@ -61,13 +61,56 @@ public class RequestController {
     ArrayList<Snake> snakes = request.getSnakes();
 
     Move foodMove = getDirectFoodMove(request.getFood()[0]);
-    if (!safeDirections.contains(foodMove) && !safeDirections.isEmpty()) {
-      foodMove = safeDirections.get(0);
-    }
+
+    Move getMove = bestMove(foodMove, safeDirections);
 
     return new MoveResponse()
-      .setMove(foodMove)
+      .setMove(getMove)
       .setTaunt("Going Somewhere!");
+  }
+
+  private Move bestMove(Move foodMove, ArrayList<Move> safeDirections) {
+    if (safeDirections.contains(foodMove)) {
+      return foodMove;
+    }
+    if (foodMove == Move.UP) {
+      if (safeDirections.contains(Move.LEFT)) {
+        return Move.LEFT;
+      }
+      if (safeDirections.contains(Move.RIGHT)) {
+        return Move.RIGHT;
+      }
+      return Move.DOWN;
+    }
+    if (foodMove == Move.DOWN) {
+      if (safeDirections.contains(Move.LEFT)) {
+        return Move.LEFT;
+      }
+      if (safeDirections.contains(Move.RIGHT)) {
+        return Move.RIGHT;
+      }
+      return Move.UP;
+    }
+
+    if (foodMove == Move.LEFT) {
+      if (safeDirections.contains(Move.UP)) {
+        return Move.UP;
+      }
+      if (safeDirections.contains(Move.DOWN)) {
+        return Move.DOWN;
+      }
+      return Move.RIGHT;
+    }
+    if (foodMove == Move.RIGHT) {
+      if (safeDirections.contains(Move.UP)) {
+        return Move.UP;
+      }
+      if (safeDirections.contains(Move.DOWN)) {
+        return Move.DOWN;
+      }
+      return Move.LEFT;
+    }
+    return Move.UP;
   }
 
   private ArrayList<Move> getSafeDirections(int xhead, int yhead, ArrayList<Snake> snakes) {
