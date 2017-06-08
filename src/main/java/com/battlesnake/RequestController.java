@@ -75,6 +75,9 @@ public class RequestController {
     directions.add(Move.RIGHT);
     for (Snake snake: snakes) {
       for (int[] coords : snake.getCoords()) {
+        if (coords == null) {
+          continue;
+        }
         //Check to the left
         if ((coords[0] == xhead -1 && coords[1] == yhead) || xhead == 0) {
           directions.remove(Move.LEFT);
@@ -102,7 +105,7 @@ public class RequestController {
     x -= foodPoint[0];
     y -= foodPoint[1];
 
-    if (Math.abs(x) < Math.abs(y)) {
+    if (x != 0 && Math.abs(x) < Math.abs(y)) {
       if (x > 0) {
         return Move.LEFT;
       } else {
