@@ -57,10 +57,13 @@ public class RequestController {
     int x = head[0];
     int y = head[1];
 
-    //ArrayList<Move> safeDirections = getSafeDirections(x, y, request.getSnakes());
+    ArrayList<Move> safeDirections = getSafeDirections(x, y, request.getSnakes());
     ArrayList<Snake> snakes = request.getSnakes();
 
-    final Move foodMove = getDirectFoodMove(request.getFood()[0]);
+    Move foodMove = getDirectFoodMove(request.getFood()[0]);
+    if (!safeDirections.contains(foodMove) && !safeDirections.isEmpty()) {
+      foodMove = safeDirections.get(0);
+    }
 
     return new MoveResponse()
       .setMove(foodMove)
