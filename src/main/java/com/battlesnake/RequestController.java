@@ -64,6 +64,10 @@ public class RequestController {
 
     Move getMove = bestMove(foodMove, safeDirections);
 
+    if (!safeDirections.contains(foodMove) && !safeDirections.isEmpty())
+    {
+      foodMove = safeDirections.get(0);
+    }
     return new MoveResponse()
       .setMove(foodMove)
       .setTaunt("Going Somewhere!");
