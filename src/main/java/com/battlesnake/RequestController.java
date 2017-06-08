@@ -29,24 +29,60 @@ import java.util.*;
 @RestController
 public class RequestController {
 
+  enum Direction { UP, DOWN, LEFT, RIGHT}
+  static String SNAKE_NAME = "All Your Snake";
+  Snake ourSnake;
+  Snake otherSnake;
+
   @RequestMapping(value="/start", method=RequestMethod.POST, produces="application/json")
   public StartResponse start(@RequestBody StartRequest request) {
     return new StartResponse()
-      .setName("All Your Base Snake")
+      .setName(SNAKE_NAME)
       .setColor("#FFAA00")
       .setHeadUrl("http://vignette1.wikia.nocookie.net/nintendo/images/6/61/Bowser_Icon.png/revision/latest?cb=20120820000805&path-prefix=en")
-      .setHeadType(HeadType.DEAD)
-      .setTailType(TailType.PIXEL)
-      .setTaunt("Roarrrrrrrrr!");
+      .setHeadType(HeadType.FANG)
+      .setTailType(TailType.CURLED)
+      .setTaunt("BELONG TO US!");
   }
 
   @RequestMapping(value="/move", method=RequestMethod.POST, produces = "application/json")
   public MoveResponse move(@RequestBody MoveRequest request) {
     int height = request.getHeight();
     int width = request.getWidth();
+    getSnakes(request.getSnakes());
+    int food[][] = request.getFood();
+
+    int head[] = ourSnake.getCoords()[0];
+    int x = head[0];
+    int y = head[1];
+    
+    ArrayList<Direction> safeDirections = getSafeDirections(x, y, request.getSnakes());
+
+
+    ArrayList<Snake> snakes = request.getSnakes();
     return new MoveResponse()
       .setMove(Move.DOWN)
       .setTaunt("Going Down!");
+  }
+
+  private ArrayList<Direction> getSafeDirections(int xhead, int yhead, ArrayList<Snake> snakes) {
+    ArrayList<Direction> directions = new ArrayList<>();
+    for (Snake snake: snakes) {
+      for (int[] coords : snake.getCoords()) {
+
+      }
+    }
+    return directions;
+  }
+
+  private void getSnakes(ArrayList<Snake> snakes) {
+    for (Snake snake : snakes) {
+        if (snake.getName().equals("All Your Base Snake")) {
+          ourSnake = snake;
+        } else {
+          otherSnake = snake;
+        }
+    }
   }
     
   @RequestMapping(value="/end", method=RequestMethod.POST)
