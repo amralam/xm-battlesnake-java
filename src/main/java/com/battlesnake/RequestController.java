@@ -29,7 +29,6 @@ import java.util.*;
 @RestController
 public class RequestController {
 
-  enum Direction { UP, DOWN, LEFT, RIGHT}
   static String SNAKE_NAME = "All Your Snake";
   Snake ourSnake;
   Snake otherSnake;
@@ -55,8 +54,8 @@ public class RequestController {
     int head[] = ourSnake.getCoords()[0];
     int x = head[0];
     int y = head[1];
-    
-    ArrayList<Direction> safeDirections = getSafeDirections(x, y, request.getSnakes());
+
+    ArrayList<Move> safeDirections = getSafeDirections(x, y, request.getSnakes());
 
 
     ArrayList<Snake> snakes = request.getSnakes();
@@ -65,8 +64,8 @@ public class RequestController {
       .setTaunt("Going Down!");
   }
 
-  private ArrayList<Direction> getSafeDirections(int xhead, int yhead, ArrayList<Snake> snakes) {
-    ArrayList<Direction> directions = new ArrayList<>();
+  private ArrayList<Move> getSafeDirections(int xhead, int yhead, ArrayList<Snake> snakes) {
+    ArrayList<Move> directions = new ArrayList<>();
     for (Snake snake: snakes) {
       for (int[] coords : snake.getCoords()) {
 
