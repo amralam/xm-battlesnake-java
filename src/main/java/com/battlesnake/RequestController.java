@@ -65,7 +65,7 @@ public class RequestController {
     Move getMove = bestMove(foodMove, safeDirections);
 
     return new MoveResponse()
-      .setMove(getMove)
+      .setMove(foodMove)
       .setTaunt("Going Somewhere!");
   }
 
